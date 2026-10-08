@@ -1,0 +1,60 @@
+import { CategoryItem } from "./types";
+
+export const CURATED_CATEGORIES: CategoryItem[] = [
+  {
+    id: "edibles",
+    title: "Edibles",
+    tagline: "Delicious Baked Treats",
+    desc: "Crispy cereal treats, gourmet chocolates, and artisan baked goods.",
+    image: "/images/category-edibles.jpg",
+    isFeaturedHome: false,
+  },
+  {
+    id: "pet",
+    title: "Pet",
+    tagline: "Happier Pets. Healthier Lives.",
+    desc: "Fast-absorbing full spectrum oils and wellness treats formulated for cats and dogs.",
+    image: "/images/category-pet.jpg",
+    isFeaturedHome: false,
+  },
+  {
+    id: "miscellaneous",
+    title: "Miscellaneous",
+    tagline: "CBD American Shaman of Hurst Essentials",
+    desc: "Curated premium wellness accessories and specialty items.",
+    image: "/images/thc_gummies_pack_1779557751523.png",
+    isFeaturedHome: false,
+  },
+  {
+    id: "topicals",
+    title: "Topicals",
+    tagline: "Care. Restore. Elevate.",
+    desc: "Targeted soothing CBD muscle creams, cooling roll-ons, and joint balms.",
+    image: "/images/category-topicals.jpg",
+    isFeaturedHome: true,
+  },
+  {
+    id: "drinks",
+    title: "Drinks",
+    tagline: "Elevated Wellness",
+    desc: "Refreshing hemp-infused sparkling beverages, tonics, and crisp seltzers.",
+    image: "/images/category-drinks.jpg",
+    isFeaturedHome: true,
+  },
+  {
+    id: "gummies",
+    title: "Gummies",
+    tagline: "Pure Fruity Bliss",
+    desc: "Organic artisan vegan fruit pectin gummies infused with clean cannabinoids.",
+    image: "/images/category-gummies.jpg",
+    isFeaturedHome: true,
+  },
+  {
+    id: "tinctures",
+    title: "Tinctures",
+    tagline: "Natural. Precise. Balanced.",
+    desc: "Potent sublingual Full Spectrum CBD and Delta-9 tincture oil drops.",
+    image: "/images/category-tinctures.jpg",
+    isFeaturedHome: false,
+  },
+];

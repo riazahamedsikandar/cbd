@@ -1,0 +1,6 @@
+{
+  "name": "CBD American Shaman of Hurst",
+  "description": "CBD and wellness products at CBD American Shaman of Hurst, Texas - quality products and third-party lab testing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
