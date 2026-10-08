@@ -8631,7 +8631,7 @@ export default function AdminPanel({
                       </h4>
                     </div>
                     <p className="text-[11.5px] text-[#5b6b55] leading-relaxed">
-                      Your store is configured to use your <strong>Hostinger MySQL Database</strong> (<code>u554546348_twobudz</code>).
+                      Your store is configured to use your <strong>Hostinger MySQL Database</strong> (<code>u554546348_cbdsouthlake</code>).
                       All product changes, customer inquiries, orders, blogs, and settings are saved directly to Hostinger MySQL via the secure PHP API bridge.
                     </p>
 
@@ -8648,11 +8648,11 @@ export default function AdminPanel({
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                         <div className="bg-white p-3 rounded-lg border border-[#e1e8db] space-y-1">
                           <span className="text-[10px] font-bold uppercase text-gray-500 block">Database Name</span>
-                          <span className="font-mono text-xs font-semibold text-gray-800">u554546348_twobudz</span>
+                          <span className="font-mono text-xs font-semibold text-gray-800">u554546348_cbdsouthlake</span>
                         </div>
                         <div className="bg-white p-3 rounded-lg border border-[#e1e8db] space-y-1">
                           <span className="text-[10px] font-bold uppercase text-gray-500 block">Database User</span>
-                          <span className="font-mono text-xs font-semibold text-gray-800">u554546348_Twobudz</span>
+                          <span className="font-mono text-xs font-semibold text-gray-800">u554546348_cbdsouthlake</span>
                         </div>
                         <div className="bg-white p-3 rounded-lg border border-[#e1e8db] space-y-1">
                           <span className="text-[10px] font-bold uppercase text-gray-500 block">Host & Port</span>
@@ -8716,7 +8716,7 @@ export default function AdminPanel({
                               businessSettings,
                             );
                             setSyncFeedback(
-                              `✅ Hostinger MySQL Synced successfully! Uploaded ${summary.products} products, ${summary.categories} categories, ${summary.blogs} blogs, ${summary.faqs} FAQs, and settings row into u554546348_twobudz.`,
+                              `✅ Hostinger MySQL Synced successfully! Uploaded ${summary.products} products, ${summary.categories} categories, ${summary.blogs} blogs, ${summary.faqs} FAQs, and settings row into u554546348_cbdsouthlake.`,
                             );
                           } catch (err: any) {
                             console.error(err);

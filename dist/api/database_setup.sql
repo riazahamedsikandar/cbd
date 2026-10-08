@@ -1,7 +1,7 @@
 -- ========================================================
 -- CBD American Shaman of Hurst Hostinger MySQL setup script
--- Database: `u554546348_AKrIN`
--- User: `u554546348_JthqJ`
+-- Database: `u554546348_cbdsouthlake`
+-- User: `u554546348_cbdsouthlake`
 -- ========================================================
 
 -- 1. PRODUCTS TABLE

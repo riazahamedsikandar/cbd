@@ -1,7 +1,7 @@
 /**
  * TwoBudz Hostinger MySQL Database Client
  * Replaces Supabase SDK with direct HTTP integration to the Hostinger PHP MySQL bridge.
- * Database: u554546348_twobudz | User: u554546348_Twobudz
+ * Database: u554546348_cbdsouthlake | User: u554546348_cbdsouthlake
  */
 
 import { normalizeToCleanAsset } from "./imageMatching";
@@ -444,7 +444,7 @@ export const clearAndSyncProductsToDatabase = clearAndSyncProductsToSupabase;
 // Export SQL schema string for manual inspection or phpMyAdmin import
 export const getSupabaseSchemaSQL = (): string => {
   return `-- Hostinger MySQL Schema for TwoBudz
--- Database: u554546348_twobudz | User: u554546348_Twobudz
+-- Database: u554546348_cbdsouthlake | User: u554546348_cbdsouthlake
 -- Automatically initialized on Hostinger deployment via /api/index.php
 `;
 };

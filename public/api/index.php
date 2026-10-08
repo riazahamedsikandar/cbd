@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // Database Configuration (Hostinger MySQL)
 $dbHost = 'localhost';
-$dbName = 'u554546348_AKrIN';
-$dbUser = 'u554546348_JthqJ';
+$dbName = 'u554546348_cbdsouthlake';
+$dbUser = 'u554546348_cbdsouthlake';
 $dbPass = 'Twobudz@2026';
 
 // Establish PDO connection
@@ -39,7 +39,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'error' => 'Database connection failed: ' . $e->getMessage(),
-        'hint' => 'Ensure database u554546348_AKrIN and user u554546348_JthqJ have been created and assigned in Hostinger hPanel.'
+        'hint' => 'Ensure database u554546348_cbdsouthlake and user u554546348_cbdsouthlake have been created and assigned in Hostinger hPanel.'
     ]);
     exit;
 }
