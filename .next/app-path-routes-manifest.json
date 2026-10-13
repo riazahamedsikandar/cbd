@@ -4,15 +4,15 @@
   "/sitemap.xml/route": "/sitemap.xml",
   "/about/page": "/about",
   "/admin/page": "/admin",
-  "/blogs/page": "/blogs",
   "/blog/page": "/blog",
   "/cbd-capsules-softgels/page": "/cbd-capsules-softgels",
   "/cbd-gummies/page": "/cbd-gummies",
+  "/blogs/page": "/blogs",
   "/cbd-oils-tinctures/page": "/cbd-oils-tinctures",
-  "/cbd-topicals-creams/page": "/cbd-topicals-creams",
   "/contact-us/page": "/contact-us",
   "/contact/page": "/contact",
   "/faq/page": "/faq",
+  "/cbd-topicals-creams/page": "/cbd-topicals-creams",
   "/learn/page": "/learn",
   "/page": "/",
   "/privacy-policy/page": "/privacy-policy",
@@ -20,7 +20,7 @@
   "/shop/page": "/shop",
   "/terms-of-service/page": "/terms-of-service",
   "/terms/page": "/terms",
-  "/blog/[slug]/page": "/blog/[slug]",
   "/product/[slug]/page": "/product/[slug]",
-  "/products/[slug]/page": "/products/[slug]"
+  "/products/[slug]/page": "/products/[slug]",
+  "/blog/[slug]/page": "/blog/[slug]"
 }

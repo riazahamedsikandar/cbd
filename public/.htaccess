@@ -1,29 +1,35 @@
 # CBD American Shaman of Hurst Hostinger LiteSpeed / Apache Routing Configuration
-Options -MultiViews
+UseCanonicalName Off
+DirectorySlash Off
+Options -Indexes -MultiViews
+
 RewriteEngine On
 RewriteBase /
 
-# 1. Allow API Bridge PHP requests to pass through directly
+# 1. Normalize multiple leading slashes (e.g. //admin -> /admin)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/{2,}([^\s?]*) [NC]
+RewriteRule ^ https://cbdhurst.com/%1 [R=301,L,NE]
+
+# 2. Redirect legacy / alias domains (twobudz.com, shophurstcbd.com, www.cbdhurst.com) strictly to https://cbdhurst.com
+RewriteCond %{HTTP_HOST} ^(www\.)?(twobudz\.com|shophurstcbd\.com)$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www\.cbdhurst\.com$ [NC]
+RewriteRule ^(.*)$ https://cbdhurst.com/$1 [R=301,L,NE]
+
+# 3. Allow API Bridge PHP requests to pass through directly
 RewriteCond %{REQUEST_URI} ^/api/ [NC]
 RewriteRule ^ - [L]
 
-# 2. Redirect legacy / alias domains (twobudz.com, shophurstcbd.com, www.cbdhurst.com) to https://cbdhurst.com
-RewriteCond %{HTTP_HOST} ^(www\.)?(twobudz\.com|shophurstcbd\.com)$ [NC,OR]
-RewriteCond %{HTTP_HOST} ^www\.cbdhurst\.com$ [NC]
-RewriteRule ^ https://cbdhurst.com%{REQUEST_URI} [R=301,L,NE]
+# 4. Check for .html alias first (e.g. /admin -> admin.html, /shop -> shop.html)
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^([^/]+)/?$ $1.html [L]
 
-# 3. Resolve static route directories before serving other files
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteCond %{REQUEST_FILENAME}/index.html -f
-RewriteRule ^(.+?)/?$ $1/index.html [L]
+# 5. Resolve static route directories with index.html (e.g. /admin/ -> admin/index.html)
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^(.*)/?$ $1/index.html [L]
 
-# 4. If the requested file exists, serve it directly
+# 6. If the requested file exists, serve it directly
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# 5. Check for .html file (e.g. /admin -> /admin.html)
-RewriteCond %{DOCUMENT_ROOT}/$1.html -f
-RewriteRule ^(.*)$ $1.html [L]
-
-# 6. Fallback all other client requests to index.html so React can handle dynamic routes
+# 7. Fallback all other client requests to index.html so React can handle dynamic routes
 RewriteRule ^ index.html [L]

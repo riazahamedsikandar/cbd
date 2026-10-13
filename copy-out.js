@@ -7,9 +7,21 @@ if (fs.existsSync('out')) {
     fs.copyFileSync('public/.htaccess', 'out/.htaccess');
   }
 
+  // Create .html aliases for all directory routes to prevent directory slash redirects
+  const entries = fs.readdirSync('out', { withFileTypes: true });
+  entries.forEach(entry => {
+    if (entry.isDirectory() && entry.name !== '_next') {
+      const indexPath = path.join('out', entry.name, 'index.html');
+      const aliasPath = path.join('out', `${entry.name}.html`);
+      if (fs.existsSync(indexPath)) {
+        fs.copyFileSync(indexPath, aliasPath);
+      }
+    }
+  });
+
   if (!fs.existsSync('dist')) {
     fs.mkdirSync('dist', { recursive: true });
   }
   fs.cpSync('out', 'dist', { recursive: true });
-  console.log('[Postbuild] Copied out/ to dist/ (including .htaccess)');
+  console.log('[Postbuild] Copied out/ to dist/ (including .htaccess and dynamic HTML aliases)');
 }

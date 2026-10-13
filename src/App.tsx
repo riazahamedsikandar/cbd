@@ -98,7 +98,20 @@ export default function App() {
     level2?: string;
   } | null>(null);
   const [activeInfoTopic, setActiveInfoTopic] = useState<string | null>(null);
-  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [products, setProducts] = useState<Product[]>(() => {
+    if (typeof window !== "undefined") {
+      for (const key of ["hurstcbd_products", "hurstcbd_custom_products", "twobudz_products", "twobudz_custom_products"]) {
+        try {
+          const val = localStorage.getItem(key);
+          if (val) {
+            const parsed = JSON.parse(val);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          }
+        } catch (e) {}
+      }
+    }
+    return PRODUCTS;
+  });
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(() => BLOG_POSTS.map((post) => ({
     ...post,
     image: resolveBlogImage(post),
@@ -115,7 +128,7 @@ export default function App() {
     ...settings,
     phone: storePhone,
     location: storeLocation,
-    email: (settings.email || "").toLowerCase().includes("twobudz")
+    email: (settings.email || "").toLowerCase().includes("twobudz") || (settings.email || "").toLowerCase().includes("shophurstcbd")
       ? businessEmail
       : settings.email || businessEmail,
     heroBadge: (settings.heroBadge || "").replace(/Flower Mound/gi, "Hurst"),
@@ -159,8 +172,34 @@ export default function App() {
     seoDescriptionOverride: "",
     seoKeywordsOverride: "",
   };
-  const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(defaultSettings);
-  const [categories, setCategories] = useState<CategoryItem[]>(DEFAULT_CATEGORIES);
+  const [businessSettings, setBusinessSettings] = useState<BusinessSettings>(() => {
+    if (typeof window !== "undefined") {
+      for (const key of ["hurstcbd_settings", "hurstcbd_business_settings", "hurstcbd_business_info", "twobudz_settings", "twobudz_business_settings", "twobudz_business_info"]) {
+        try {
+          const val = localStorage.getItem(key);
+          if (val) {
+            const parsed = JSON.parse(val);
+            if (parsed && typeof parsed === "object") return normalizeBusinessSettings({ ...defaultSettings, ...parsed });
+          }
+        } catch (e) {}
+      }
+    }
+    return normalizeBusinessSettings(defaultSettings);
+  });
+  const [categories, setCategories] = useState<CategoryItem[]>(() => {
+    if (typeof window !== "undefined") {
+      for (const key of ["hurstcbd_categories", "hurstcbd_custom_categories", "twobudz_categories", "twobudz_custom_categories"]) {
+        try {
+          const val = localStorage.getItem(key);
+          if (val) {
+            const parsed = JSON.parse(val);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          }
+        } catch (e) {}
+      }
+    }
+    return DEFAULT_CATEGORIES;
+  });
   const [reviews, setReviews] = useState<ReviewItem[]>([]);
 
   React.useEffect(() => {
@@ -288,6 +327,8 @@ export default function App() {
           });
           setProducts(mappedDbProducts as Product[]);
           try {
+            safeSetItem("hurstcbd_custom_products", JSON.stringify(mappedDbProducts));
+            safeSetItem("hurstcbd_products", JSON.stringify(mappedDbProducts));
             safeSetItem("twobudz_custom_products", JSON.stringify(mappedDbProducts));
             safeSetItem("twobudz_products", JSON.stringify(mappedDbProducts));
           } catch (e) {}
@@ -302,7 +343,10 @@ export default function App() {
         if (!catErr && dbCategories && dbCategories.length > 0) {
           setCategories(dbCategories as CategoryItem[]);
           try {
+            safeSetItem("hurstcbd_custom_categories", JSON.stringify(dbCategories));
+            safeSetItem("hurstcbd_categories", JSON.stringify(dbCategories));
             safeSetItem("twobudz_custom_categories", JSON.stringify(dbCategories));
+            safeSetItem("twobudz_categories", JSON.stringify(dbCategories));
           } catch (e) {}
         } else if (!catErr && dbCategories && dbCategories.length === 0) {
           setCategories([]);

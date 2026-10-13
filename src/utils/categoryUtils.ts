@@ -310,15 +310,15 @@ export function getCleanCategoryImage(catId: string, customImage?: string): stri
     return customImage.trim();
   }
   const cleanMapping: Record<string, string> = {
-    drinks: "/images/category-drinks.jpg",
-    tinctures: "/images/category-tinctures.jpg",
-    topicals: "/images/category-topicals.jpg",
-    gummies: "/images/category-gummies.jpg",
-    edibles: "/images/category-edibles.jpg",
-    "edibles-and-gummies": "/images/category-edibles.jpg",
-    "edibles_and_gummies": "/images/category-edibles.jpg",
-    pet: "/images/category-pet.jpg",
-    miscellaneous: "/images/thc_gummies_pack_1779557751523.png",
+    drinks: "/images/categories/drinks.jpg",
+    tinctures: "/images/categories/tinctures.jpg",
+    topicals: "/images/categories/topicals.jpg",
+    gummies: "/images/categories/edibles-and-gummies.jpg",
+    edibles: "/images/categories/edibles-and-gummies.jpg",
+    "edibles-and-gummies": "/images/categories/edibles-and-gummies.jpg",
+    "edibles_and_gummies": "/images/categories/edibles-and-gummies.jpg",
+    pet: "/images/categories/pet.jpg",
+    miscellaneous: "/images/categories/drinks.jpg",
   };
-  return cleanMapping[catId.toLowerCase()] || customImage || "/images/category-drinks.jpg";
+  return cleanMapping[catId.toLowerCase()] || customImage || "/images/categories/drinks.jpg";
 }

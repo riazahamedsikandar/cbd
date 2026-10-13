@@ -26,14 +26,14 @@ export default function Categories({ setView, setSelectedCategory, categories = 
       drinks: "/images/categories/drinks.jpg",
       tinctures: "/images/categories/tinctures.jpg",
       topicals: "/images/categories/topicals.jpg",
-      gummies: "/images/categories/gummies.jpg",
-      "edibles-and-gummies": "/images/categories/edibles.jpg",
+      gummies: "/images/categories/edibles-and-gummies.jpg",
+      "edibles-and-gummies": "/images/categories/edibles-and-gummies.jpg",
       pet: "/images/categories/pet.jpg",
-      miscellaneous: "/images/category-gummies.jpg",
+      miscellaneous: "/images/categories/drinks.jpg",
     };
     const mappedImage = cleanMapping[catId.toLowerCase()];
     if (mappedImage) return mappedImage;
-    return "/images/category-drinks.jpg";
+    return "/images/categories/drinks.jpg";
   };
 
   const categoriesList = finalCategoriesToDisplay.map((cat) => ({
