@@ -1,6 +1,6 @@
 <?php
 /**
- * TwoBudz Hostinger MySQL Database REST API Bridge
+ * CBD American Shaman of Hurst Hostinger MySQL Database REST API Bridge
  * Connects frontend static Next.js export with Hostinger MySQL
  */
 
@@ -12,7 +12,7 @@ ini_set('display_errors', '0');
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
+header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, Origin, Accept');
 
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -188,7 +188,7 @@ function ensureTablesExist($pdo) {
             $defaultSettings = [
                 'id' => 'business_info',
                 'phone' => '+1 (817) 494-3335',
-                'email' => '',
+                'email' => 'info@shophurstcbd.com',
                 'hours' => 'Monday - Friday: 10:30am - 7:30 pm | Saturday: 10:30am - 6:30 pm | Sunday: 11:00 am - 6:00 pm',
                 'location' => '730 W Pipeline Rd, Hurst, TX 76053',
                 'heroBadge' => 'PREMIUM HEMP & CBD • HURST, TX',
@@ -222,7 +222,7 @@ function ensureTablesExist($pdo) {
         }
     } catch (Exception $e) {}
     try {
-      $pdo->exec("UPDATE `settings` SET `data` = JSON_SET(`data`, '$.phone', '+1 (817) 494-3335', '$.email', '', '$.location', '730 W Pipeline Rd, Hurst, TX 76053', '$.heroBadge', 'PREMIUM HEMP & CBD • HURST, TX', '$.heroParagraph', 'Welcome to CBD American Shaman of Hurst, your local source for hemp, CBD flowers, clean tinctures, and targeted comfort.', '$.heroCommitmentLabel', 'HURST STORE COMMITMENT') WHERE `id` = 'business_info'");
+      $pdo->exec("UPDATE `settings` SET `data` = JSON_SET(`data`, '$.phone', '+1 (817) 494-3335', '$.email', 'info@shophurstcbd.com', '$.location', '730 W Pipeline Rd, Hurst, TX 76053', '$.heroBadge', 'PREMIUM HEMP & CBD • HURST, TX', '$.heroParagraph', 'Welcome to CBD American Shaman of Hurst, your local source for hemp, CBD flowers, clean tinctures, and targeted comfort.', '$.heroCommitmentLabel', 'HURST STORE COMMITMENT') WHERE `id` = 'business_info'");
     } catch (Exception $e) {}
     // Ensure image columns are LONGTEXT so images/base64 are never truncated at 65KB
     try {
@@ -347,7 +347,7 @@ function trySmtpTransport($host, $port, $encryption, $user, $pass, $fromEmail, $
         return false;
     }
 
-    $write('EHLO twobudz.com');
+    $write('EHLO shophurstcbd.com');
     $ehlo = $read();
 
     if ($encryption === 'tls') {
@@ -363,7 +363,7 @@ function trySmtpTransport($host, $port, $encryption, $user, $pass, $fromEmail, $
             @fclose($socket);
             return false;
         }
-        $write('EHLO twobudz.com');
+        $write('EHLO shophurstcbd.com');
         $ehlo = $read();
     }
 
@@ -428,10 +428,10 @@ function trySmtpTransport($host, $port, $encryption, $user, $pass, $fromEmail, $
     return $sent;
 }
 
-function sendHostingerSmtpEmail($toEmail, $toName, $subject, $htmlContent, $replyTo = 'info@twobudz.com', $ccEmails = '') {
-    $fromEmail = 'info@twobudz.com';
+function sendHostingerSmtpEmail($toEmail, $toName, $subject, $htmlContent, $replyTo = 'info@shophurstcbd.com', $ccEmails = '') {
+    $fromEmail = 'info@shophurstcbd.com';
     $fromName = 'CBD American Shaman of Hurst';
-    $smtpUser = 'info@twobudz.com';
+    $smtpUser = 'info@shophurstcbd.com';
     $smtpPass = 'TBflowermound1!';
 
     $recipients = [$toEmail];
@@ -453,7 +453,7 @@ function sendHostingerSmtpEmail($toEmail, $toName, $subject, $htmlContent, $repl
         "MIME-Version: 1.0",
         "Content-Type: text/html; charset=UTF-8",
         "Content-Transfer-Encoding: 8bit",
-        "X-Mailer: TwoBudz Mailer 2.0"
+        "X-Mailer: CBD American Shaman of Hurst Mailer 2.0"
     ];
 
     if (!empty($ccEmails)) {
@@ -484,7 +484,7 @@ function sendHostingerSmtpEmail($toEmail, $toName, $subject, $htmlContent, $repl
     if (!empty($ccEmails)) {
         $nativeHeaders .= "Cc: {$ccEmails}\r\n";
     }
-    $nativeHeaders .= "X-Mailer: TwoBudz Native Mailer\r\n";
+    $nativeHeaders .= "X-Mailer: CBD American Shaman of Hurst Native Mailer\r\n";
 
     // Deliver to every recipient in $recipients so that both primary AND CC inboxes receive the email!
     $anySent = false;
@@ -938,7 +938,7 @@ function buildOwnerOrderEmailHtml($order) {
 }
 
 // Master dispatch function for sending both Customer Confirmation & Owner Alert
-function dispatchTwoBudzOrderEmails($order) {
+function dispatchHurstCBDOrderEmails($order) {
     if (empty($order) || !is_array($order)) {
         return ['success' => false, 'error' => 'Order data missing'];
     }
@@ -947,7 +947,7 @@ function dispatchTwoBudzOrderEmails($order) {
     $custEmail = $order['customerEmail'] ?? ($cust['email'] ?? '');
     $custName = $order['customerName'] ?? trim(($cust['firstName'] ?? '') . ' ' . ($cust['lastName'] ?? ''));
     if (empty($custName)) $custName = 'Valued Customer';
-    $orderId = (string)($order['id'] ?? ('BUDZ-' . rand(100000, 999999)));
+    $orderId = (string)($order['id'] ?? ('HURST-' . rand(100000, 999999)));
 
     // Prevent duplicate sending for the same order within 60 seconds
     $lockFile = sys_get_temp_dir() . '/tb_sent_' . md5($orderId);
@@ -971,7 +971,7 @@ function dispatchTwoBudzOrderEmails($order) {
             $custName,
             $customerSubject,
             $customerHtml,
-            'info@twobudz.com'
+            'info@shophurstcbd.com'
         );
     }
 
@@ -980,15 +980,18 @@ function dispatchTwoBudzOrderEmails($order) {
     $adminSubject = "🚨 New Order #{$orderId} - {$custName} (\${$totalFormatted})";
     $adminHtml = buildOwnerOrderEmailHtml($order);
     $results['owner'] = sendHostingerSmtpEmail(
-        'info@twobudz.com',
+        'info@shophurstcbd.com',
         'CBD American Shaman of Hurst',
         $adminSubject,
         $adminHtml,
-        $custEmail ?: 'info@twobudz.com',
-        'twobudzcbd@gmail.com, cbdsouthlake@gmail.com'
+        $custEmail ?: 'info@shophurstcbd.com'
     );
 
     return ['success' => true, 'details' => $results];
+}
+
+function dispatchTwoBudzOrderEmails($order) {
+    return dispatchHurstCBDOrderEmails($order);
 }
 
 // Route handlers
@@ -1022,7 +1025,7 @@ if ($action === 'health' || $action === 'ping') {
 
 // Test email endpoint
 if ($action === 'test_email') {
-    $targetEmail = $_GET['to'] ?? 'info@twobudz.com';
+    $targetEmail = $_GET['to'] ?? 'info@shophurstcbd.com';
     $mockOrder = [
         'id' => 'TEST-' . rand(1000, 9999),
         'customer' => [
@@ -1066,7 +1069,7 @@ if ($action === 'test_email') {
         'date' => date('M j, Y, g:i a')
     ];
 
-    $result = dispatchTwoBudzOrderEmails($mockOrder);
+    $result = dispatchHurstCBDOrderEmails($mockOrder);
     echo json_encode(['success' => true, 'action' => 'test_email', 'sentTo' => $targetEmail, 'results' => $result]);
     exit;
 }
@@ -1177,7 +1180,7 @@ if ($method === 'GET') {
             $defaultSettings = [
                 'id' => 'business_info',
                 'phone' => '+1 (817) 494-3335',
-                'email' => '',
+                'email' => 'info@shophurstcbd.com',
                 'hours' => 'Monday - Friday: 10:30am - 7:30 pm | Saturday: 10:30am - 6:30 pm | Sunday: 11:00 am - 6:00 pm',
                 'location' => '730 W Pipeline Rd, Hurst, TX 76053',
                 'heroBadge' => 'PREMIUM HEMP & CBD • HURST, TX',
@@ -1231,7 +1234,7 @@ $data = $body['data'] ?? $_POST['data'] ?? $body;
 // Order confirmation & owner alert email dispatch action
 if ($postAction === 'send_order_email') {
     $orderData = !empty($data['order']) ? $data['order'] : $data;
-    $res = dispatchTwoBudzOrderEmails($orderData);
+    $res = dispatchHurstCBDOrderEmails($orderData);
     echo json_encode(['success' => true, 'emails' => $res]);
     exit;
 }
@@ -1626,7 +1629,7 @@ if ($postAction === 'upsert' || $postAction === 'insert' || $postAction === 'upd
             $stmt->execute([
                 ':id' => (string)$item['id'],
                 ':customerName' => $custName ?: 'Customer',
-                ':customerEmail' => $custEmail ?: 'info@twobudz.com',
+                ':customerEmail' => $custEmail ?: 'info@shophurstcbd.com',
                 ':customerPhone' => $custPhone ?: '',
                 ':shippingAddress' => $shipping ?: '',
                 ':customer' => json_encode($cust),
@@ -1641,7 +1644,7 @@ if ($postAction === 'upsert' || $postAction === 'insert' || $postAction === 'upd
             ]);
 
             // Automatically dispatch customer confirmation + owner notification emails!
-            $emailResult = dispatchTwoBudzOrderEmails($item);
+            $emailResult = dispatchHurstCBDOrderEmails($item);
 
             echo json_encode(['success' => true, 'id' => $item['id'], 'emails' => $emailResult]);
             exit;
@@ -1744,7 +1747,7 @@ if ($postAction === 'delete') {
 
 // Fallback
 echo json_encode([
-    'status' => 'TwoBudz MySQL API is ready',
+    'status' => 'CBD American Shaman of Hurst MySQL API is ready',
     'usage' => [
         'GET ?table=products|categories|blogs|faqs|orders|inquiries|reviews|settings|all',
         'GET ?action=health',

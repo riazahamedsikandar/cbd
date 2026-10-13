@@ -12,7 +12,7 @@ export interface LearnPageData {
 export const LEARN_PAGES: LearnPageData[] = [
   {
     "slug": "cbd-gummies",
-    "url": "https://www.CBD American Shaman of Hurst.com/cbd-gummies",
+    "url": "https://cbdhurst.com/cbd-gummies",
     "menuTitle": "cbd gummies",
     "title": "CBD Gummies in Hurst, TX | CBD American Shaman of Hurst",
     "metaTitle": "CBD Gummies in Hurst, TX | CBD American Shaman of Hurst",
@@ -22,7 +22,7 @@ export const LEARN_PAGES: LearnPageData[] = [
   },
   {
     "slug": "cbd-oils-tinctures",
-    "url": "https://www.CBD American Shaman of Hurst.com/cbd-oils-tinctures",
+    "url": "https://cbdhurst.com/cbd-oils-tinctures",
     "menuTitle": "cbd tinctures",
     "title": "CBD Oils & Tinctures in Hurst, TX | CBD American Shaman of Hurst",
     "metaTitle": "CBD Oils & Tinctures in Hurst, TX | CBD American Shaman of Hurst",
@@ -32,7 +32,7 @@ export const LEARN_PAGES: LearnPageData[] = [
   },
   {
     "slug": "cbd-capsules-softgels",
-    "url": "https://www.CBD American Shaman of Hurst.com/cbd-capsules-softgels",
+    "url": "https://cbdhurst.com/cbd-capsules-softgels",
     "menuTitle": "cbd capsules",
     "title": "CBD Capsules & Softgels in Hurst, TX | CBD American Shaman of Hurst",
     "metaTitle": "CBD Capsules & Softgels in Hurst, TX | CBD American Shaman of Hurst",
@@ -42,7 +42,7 @@ export const LEARN_PAGES: LearnPageData[] = [
   },
   {
     "slug": "cbd-topicals-creams",
-    "url": "https://www.CBD American Shaman of Hurst.com/cbd-topicals-creams",
+    "url": "https://cbdhurst.com/cbd-topicals-creams",
     "menuTitle": "cbd topicals",
     "title": "CBD Topicals & Creams in Hurst, TX | CBD American Shaman of Hurst",
     "metaTitle": "CBD Topicals & Creams in Hurst, TX | CBD American Shaman of Hurst",

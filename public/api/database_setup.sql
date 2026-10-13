@@ -141,14 +141,14 @@ CREATE TABLE IF NOT EXISTS `settings` (
 
 INSERT INTO `settings` (`id`, `data`) VALUES (
     'business_info',
-    '{"id":"business_info","phone":"+1 214-513-0100","email":"hello@twobudz.com","hours":"Monday - Friday: 10:30am - 7:30 pm | Saturday: 10:30am - 6:30 pm | Sunday: 11:00 am - 6:00 pm","location":"2001 Cross Timbers Rd #103, Flower Mound, TX 75028","heroBadge":"PREMIUM HEMP & CBD • FLOWER MOUND, TX","heroHeadingLine1":"Earthy Purity.","heroHeadingLine2":"Crafted Wellness & Relief.","heroParagraph":"Welcome to Two Budz, Flower Mound\'s trusted source for state-compliant, high-potency Delta-8, Delta-9, CBD Flowers, clean tinctures, and targeted comfort.","heroButtonPrimary":"EXPLORE PRODUCTS","heroButtonSecondary":"OUR STORY","heroImage":"/images/hero_bg_1779557711335.png","heroVerifiedText":"VERIFIED 100% LEGAL","heroWidget1Image":"/images/cbd_dropper_1779557730794.png","heroWidget1Label":"BEST SELLER","heroWidget1Title":"Organic CBD","heroWidget1Rating":"4.9","heroWidget2Image":"/images/thc_gummies_pack_1779557751523.png","heroWidget2Label":"POPULAR","heroWidget2Title":"Delta-9 Packs","heroWidget2Sub":"Pure Extraction","heroCommitmentLabel":"TWO BUDZ COMMITMENT","heroCommitmentTitle":"Small Business Owned","seoTitleOverride":"","seoDescriptionOverride":"","seoKeywordsOverride":"","urlShop":"shop","urlLearn":"learn","urlAbout":"about","urlFaq":"faq"}'
+    '{"id":"business_info","phone":"+1 214-513-0100","email":"info@shophurstcbd.com","hours":"Monday - Friday: 10:30am - 7:30 pm | Saturday: 10:30am - 6:30 pm | Sunday: 11:00 am - 6:00 pm","location":"2001 Cross Timbers Rd #103, Flower Mound, TX 75028","heroBadge":"PREMIUM HEMP & CBD • FLOWER MOUND, TX","heroHeadingLine1":"Earthy Purity.","heroHeadingLine2":"Crafted Wellness & Relief.","heroParagraph":"Welcome to Two Budz, Flower Mound\'s trusted source for state-compliant, high-potency Delta-8, Delta-9, CBD Flowers, clean tinctures, and targeted comfort.","heroButtonPrimary":"EXPLORE PRODUCTS","heroButtonSecondary":"OUR STORY","heroImage":"/images/hero_bg_1779557711335.png","heroVerifiedText":"VERIFIED 100% LEGAL","heroWidget1Image":"/images/cbd_dropper_1779557730794.png","heroWidget1Label":"BEST SELLER","heroWidget1Title":"Organic CBD","heroWidget1Rating":"4.9","heroWidget2Image":"/images/thc_gummies_pack_1779557751523.png","heroWidget2Label":"POPULAR","heroWidget2Title":"Delta-9 Packs","heroWidget2Sub":"Pure Extraction","heroCommitmentLabel":"TWO BUDZ COMMITMENT","heroCommitmentTitle":"Small Business Owned","seoTitleOverride":"","seoDescriptionOverride":"","seoKeywordsOverride":"","urlShop":"shop","urlLearn":"learn","urlAbout":"about","urlFaq":"faq"}'
 ) ON DUPLICATE KEY UPDATE `id`=`id`;
 
 UPDATE `settings`
 SET `data` = JSON_SET(
     `data`,
     '$.phone', '+1 (817) 494-3335',
-    '$.email', '',
+    '$.email', 'info@shophurstcbd.com',
     '$.location', '730 W Pipeline Rd, Hurst, TX 76053',
     '$.heroBadge', 'PREMIUM HEMP & CBD • HURST, TX',
     '$.heroParagraph', 'Welcome to CBD American Shaman of Hurst, your local source for hemp, CBD flowers, clean tinctures, and targeted comfort.',

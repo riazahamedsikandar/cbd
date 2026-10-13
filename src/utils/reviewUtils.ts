@@ -1,5 +1,5 @@
 import { Product, ReviewItem } from "../types";
-import { cleanUnicodeString, normalizeTitleForMatching } from "./textSanitizer";
+import { cleanUnicodeString, normalizeTitleForMatching, sanitizeBrandText } from "./textSanitizer";
 
 export const BUILTIN_REVIEW_TEMPLATES = [
   {
@@ -169,11 +169,11 @@ export const parseBulkReviewsCSV = (text: string, products: Product[]): ReviewIt
         result.push({
           id: item.id ? String(item.id) : `rev-bulk-${Date.now()}-${i + 1}`,
           productId: matchedProd ? matchedProd.id : (item.productId || item.product_id || products[0]?.id || "p1"),
-          productName: matchedProd ? matchedProd.name : (prodVal || "Customer Product Review"),
-          author: item.author || item.name || item.reviewer || "Verified Client",
+          productName: sanitizeBrandText(matchedProd ? matchedProd.name : (prodVal || "Customer Product Review")),
+          author: sanitizeBrandText(item.author || item.name || item.reviewer || "Verified Client"),
           rating: Number(item.rating) || 5,
-          title: item.title || item.headline || "",
-          comment: item.comment || item.review || item.text || "Great quality organic product!",
+          title: sanitizeBrandText(item.title || item.headline || ""),
+          comment: sanitizeBrandText(item.comment || item.review || item.text || "Great quality organic product!"),
           date: item.date || new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
           status: item.status || "approved",
           verified: item.verified ?? true,
@@ -268,12 +268,12 @@ export const parseBulkReviewsCSV = (text: string, products: Product[]): ReviewIt
     result.push({
       id: finalRevId,
       productId: finalProdId,
-      productName: finalProdName,
-      author: author.trim() || "Verified Customer",
-      name: author.trim() || "Verified Customer",
+      productName: sanitizeBrandText(finalProdName),
+      author: sanitizeBrandText(author.trim() || "Verified Customer"),
+      name: sanitizeBrandText(author.trim() || "Verified Customer"),
       rating: ratingIdx !== -1 ? Number(row[ratingIdx]) || 5 : 5,
-      title: titleIdx !== -1 ? row[titleIdx] : "",
-      comment: comment.trim() || "Great organic formula!",
+      title: sanitizeBrandText(titleIdx !== -1 ? row[titleIdx] : ""),
+      comment: sanitizeBrandText(comment.trim() || "Great organic formula!"),
       date: dateIdx !== -1 && row[dateIdx] ? row[dateIdx] : new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
       status: "approved",
       verified: true,

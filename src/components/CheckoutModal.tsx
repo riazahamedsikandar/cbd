@@ -66,9 +66,10 @@ export default function CheckoutModal({
   const triggerEmailNotification = async (orderIdVal: string, orderData: any) => {
     try {
       const apiUrl = getApiUrl();
-      fetch(apiUrl, {
+      fetch(`${apiUrl}?_t=${Date.now()}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        cache: "no-store",
         body: JSON.stringify({
           action: "send_order_email",
           data: orderData,
@@ -524,9 +525,7 @@ export default function CheckoutModal({
                 An automated order notification has been sent to the store team:
               </p>
               <div className="bg-white p-2.5 rounded-xl border border-gray-100 font-mono text-[10px] text-[#3b142e] space-y-0.5 select-all">
-                <div>• CBD American Shaman of Hurst</div>
-                <div>• cbdsouthlake@gmail.com</div>
-                <div>• Hurst, TX</div>
+                <div>• info@cbdhurst.com</div>
               </div>
               <p className="text-[#72856a] leading-relaxed italic font-semibold">
                 * A certified wellness consultant will ring you shortly at <span className="text-[#2c3527] underline decoration-wavy decoration-[#3b142e] font-sans font-bold">{formData.phone}</span> to coordinate your delivery/pickup details. Keep your phone close!
@@ -547,7 +546,7 @@ export default function CheckoutModal({
                 onClick={() => {
                   // Fallback manually trigger email client if needed
                   const itemsText = cartItems.map(item => `- ${item.product.name} x${item.quantity}`).join("\n");
-                  const mailtoRecipients = "info@twobudz.com,cbdsouthlake@gmail.com,twobudzcbd@gmail.com";
+                  const mailtoRecipients = "info@cbdhurst.com";
                   const subject = `New Order Placed - ID: ${orderId}`;
                   const body = `Order ${orderId}\nCustomer: ${formData.firstName} ${formData.lastName}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nProducts:\n${itemsText}`;
                   window.location.href = `mailto:${mailtoRecipients}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;

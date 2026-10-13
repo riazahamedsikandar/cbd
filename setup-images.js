@@ -301,7 +301,7 @@ function matchProductImage(
     "cbd", "thc", "mg", "gummies", "gummy", "free", "delta", "the", "and", "for",
     "with", "in", "of", "pack", "count", "ct", "oz", "ml", "product", "item",
     "hemp", "extract", "natural", "full", "spectrum", "broad", "bottle", "pure",
-    "raw", "daily", "blend", "formula", "super", "premium", "two", "budz", "twobudz"
+    "raw", "daily", "blend", "formula", "super", "premium", "shaman", "hurst"
   ]);
 
   const clean = (str) =>
@@ -598,7 +598,7 @@ function writeStaticCsvProducts(detectedImages, detectedFolder) {
       benefits: [
         "Farm-bill compliant organic formula",
         "Third-party lab tested for purity and potency",
-        "Available in Flower Mound, TX & online shipping",
+        "Available in Hurst, TX & online shipping",
       ],
       labResults: {
         purity: "99.8%",
@@ -611,9 +611,9 @@ function writeStaticCsvProducts(detectedImages, detectedFolder) {
       isFeaturedHome: isCuratedFeatured,
       isNew: index % 12 === 0,
       status,
-      metaTitle: `${name} | TwoBudz Flower Mound, TX`,
+      metaTitle: `${name} | CBD American Shaman of Hurst, TX`,
       metaDescription: rawShortDesc.slice(0, 155),
-      tags: `${category}, ${name.toLowerCase().split(" ").slice(0, 3).join(", ")}, hemp, twobudz`,
+      tags: `${category}, ${name.toLowerCase().split(" ").slice(0, 3).join(", ")}, hemp, hurst cbd`,
       altText: name,
     };
   });

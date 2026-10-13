@@ -67,7 +67,7 @@ export interface Testimonial {
 }
 
 export interface BlogPost {
-  id: number;
+  id: string | number;
   title: string;
   summary: string;
   content: string;
@@ -89,7 +89,7 @@ export interface BlogPost {
 }
 
 export interface FAQItem {
-  id: number;
+  id: string | number;
   question: string;
   answer: string;
 }
@@ -130,7 +130,9 @@ export interface Inquiry {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   msg: string;
+  message?: string;
   status: string;
   date: string;
 }
@@ -169,10 +171,13 @@ export interface ReviewItem {
   productId: string;
   productName?: string;
   author: string;
+  name?: string;
   rating: number;
   comment: string;
   title?: string;
   date: string;
+  status?: string;
+  verified?: boolean;
   created_at?: string;
 }
 

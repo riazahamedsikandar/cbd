@@ -27,3 +27,23 @@ export const normalizeTitleForMatching = (title: string = ""): string => {
     .replace(/[^a-z0-9]/g, "") // Remove all non-alphanumeric characters
     .trim();
 };
+
+/**
+ * Replaces any obsolete brand names like "TwoBudz" or old locations with current store branding:
+ * "CBD American Shaman of Hurst" / "cbdhurst.com" / "Hurst"
+ */
+export const sanitizeBrandText = (text: string = ""): string => {
+  if (!text) return "";
+  return text
+    .replace(/twobudz\.com/gi, "cbdhurst.com")
+    .replace(/shophurstcbd\.com/gi, "cbdhurst.com")
+    .replace(/info@twobudz\.com/gi, "info@cbdhurst.com")
+    .replace(/info@shophurstcbd\.com/gi, "info@cbdhurst.com")
+    .replace(/twobudzcbd@gmail\.com/gi, "info@cbdhurst.com")
+    .replace(/client@twobudz\.com/gi, "client@cbdhurst.com")
+    .replace(/inquiry@twobudz\.com/gi, "inquiry@cbdhurst.com")
+    .replace(/user@twobudz\.com/gi, "user@cbdhurst.com")
+    .replace(/twobudz/gi, "CBD American Shaman of Hurst")
+    .replace(/flower mound/gi, "Hurst");
+};
+

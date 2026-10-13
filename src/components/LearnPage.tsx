@@ -244,18 +244,18 @@ export default function LearnPage({
             )}
 
             {/* In-Store Dispensary Visit Callout */}
-            <div className="bg-gradient-to-br from-[#2c3527] to-[#1e241a] rounded-3xl p-6 text-white space-y-3 shadow-md">
-              <span className="inline-block bg-[#3b142e] text-[10px] font-mono font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+            <div className="bg-gradient-to-br from-[#2c3527] to-[#1e241a] rounded-3xl p-6 text-white space-y-3 shadow-md border border-[#3b4734]">
+              <span className="inline-block bg-[#f0bc37] text-[#2c3527] text-[10px] font-mono font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
                 Visit In Person
               </span>
-              <h4 className="text-lg font-serif font-black leading-tight">
+              <h4 className="text-lg font-serif font-black leading-tight text-white">
                 Hurst Storefront
               </h4>
               <p className="text-xs text-[#cbd5c2] leading-relaxed">
                 730 W Pipeline Rd, Hurst, TX 76053. Speak with our certified cannabinoid wellness guides today.
               </p>
-              <div className="pt-2 text-xs font-mono text-[#3b142e] font-bold">
-                Call: (817) 494-3335
+              <div className="pt-2 text-xs font-mono font-bold">
+                Call: <a href="tel:+18174943335" className="text-[#f0bc37] hover:text-white underline underline-offset-2 transition-colors">(817) 494-3335</a>
               </div>
             </div>
 

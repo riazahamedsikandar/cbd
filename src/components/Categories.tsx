@@ -18,6 +18,10 @@ export default function Categories({ setView, setSelectedCategory, categories = 
   const finalCategoriesToDisplay = displayCategoriesRaw.length > 0 ? displayCategoriesRaw : categories.slice(0, 6);
 
   const getCleanCategoryImage = (catId: string, customImage?: string) => {
+    if (customImage?.trim()) {
+      return normalizeToCleanAsset(customImage.trim()) || customImage.trim();
+    }
+
     const cleanMapping: Record<string, string> = {
       drinks: "/images/categories/drinks.jpg",
       tinctures: "/images/categories/tinctures.jpg",
@@ -29,10 +33,7 @@ export default function Categories({ setView, setSelectedCategory, categories = 
     };
     const mappedImage = cleanMapping[catId.toLowerCase()];
     if (mappedImage) return mappedImage;
-    if (customImage && !customImage.startsWith("data:")) {
-      return normalizeToCleanAsset(customImage) || customImage;
-    }
-    return customImage || "/images/category-drinks.jpg";
+    return "/images/category-drinks.jpg";
   };
 
   const categoriesList = finalCategoriesToDisplay.map((cat) => ({
@@ -79,14 +80,14 @@ export default function Categories({ setView, setSelectedCategory, categories = 
                   e.preventDefault();
                   handleCategoryClick(category.id);
                 }}
-                className="group relative aspect-square rounded-2xl overflow-hidden border border-[#e1e8db] text-left cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:border-[#3b142e] hover:shadow-2xl focus:outline-none bg-[#f7f9f4] block text-inherit no-underline shadow-sm"
+                className="group relative aspect-square rounded-2xl overflow-hidden border border-[#e1e8db] text-left cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:border-[#3b142e] hover:shadow-2xl focus:outline-none bg-[#3b142e] block text-inherit no-underline shadow-sm"
               >
                 {/* Background Image - Clean & Vibrant, No White Fog */}
-                <div className="absolute inset-0 z-0 bg-[#eef2ea]">
+                <div className="absolute inset-0 z-0 bg-[#3b142e]">
                   <img
                     src={category.image}
                     alt={category.title}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="w-full h-full object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     onError={(e) => handleImageError(e, category.id)}
                     referrerPolicy="no-referrer"
                   />

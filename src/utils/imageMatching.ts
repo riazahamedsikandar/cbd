@@ -202,7 +202,7 @@ export const getJpgOrWebp = (jpgName: string, webpName: string): string => {
     "cbd", "thc", "mg", "gummies", "gummy", "free", "delta", "the", "and", "for",
     "with", "in", "of", "pack", "count", "ct", "oz", "ml", "product", "item",
     "hemp", "extract", "natural", "full", "spectrum", "broad", "bottle", "pure",
-    "raw", "daily", "blend", "formula", "super", "premium", "two", "budz", "twobudz"
+    "raw", "daily", "blend", "formula", "super", "premium", "shaman", "hurst"
   ]);
 
   // Robust token clean extractor
@@ -477,9 +477,14 @@ export const normalizeToCleanAsset = (url: string, category: string = "", produc
 export const getCategoryFallbackImage = (category: string): string => {
   if (LOCAL_IMAGES.length === 0) return "/brand-feather.png";
 
-  if (LOCAL_IMAGES.length === 0) return "/brand-feather.png";
-
   const normCat = (category || "").toLowerCase();
+
+  if (normCat.includes("drink") || normCat.includes("beverage")) return "/images/categories/drinks.jpg";
+  if (normCat.includes("tincture") || normCat.includes("oil")) return "/images/categories/tinctures.jpg";
+  if (normCat.includes("topical") || normCat.includes("cream") || normCat.includes("lotion")) return "/images/categories/topicals.jpg";
+  if (normCat.includes("pet") || normCat.includes("dog") || normCat.includes("cat")) return "/images/categories/pet.jpg";
+  if (normCat.includes("edible")) return "/images/categories/edibles.jpg";
+  if (normCat.includes("gum") || normCat.includes("gummy") || normCat.includes("chew")) return "/images/categories/gummies.jpg";
   
   if (normCat.includes("oil") || normCat.includes("drop") || normCat.includes("tincture") || normCat.includes("cbd-oils")) {
     return "/images/wyld-thc-free-peach-cbd-gummies.webp";
@@ -509,12 +514,6 @@ export const handleImageError = (
 ) => {
   const target = e.target as HTMLImageElement;
   
-  // Guard: Do not overwrite base64 data URLs or blob URLs uploaded by user
-  const currentSrc = target.src || "";
-  if (currentSrc.startsWith("data:") || currentSrc.startsWith("blob:")) {
-    return;
-  }
-
   if (target.getAttribute("data-image-fallback") === "true") {
     target.onerror = null;
     target.src = "/images/product-image-fallback.svg";

@@ -1,3 +1,4 @@
+import { CategoryItem, Product, Testimonial, BlogPost, FAQItem } from "./types";
 import { CURATED_40_PRODUCTS } from "./curatedProducts";
 import { CURATED_BLOG_POSTS } from "./curatedBlogs";
 import { CURATED_CATEGORIES } from "./curatedCategories";

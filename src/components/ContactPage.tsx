@@ -23,7 +23,7 @@ export default function ContactPage({
   setView,
   settings = {
     phone: "+1 (817) 494-3335",
-    email: "",
+    email: "info@cbdhurst.com",
     hours: "Monday - Friday: 10:30am - 7:30 pm | Saturday: 10:30am - 6:30 pm | Sunday: 11:00 am - 6:00 pm",
     location: "730 W Pipeline Rd, Hurst, TX 76053",
     heroBadge: "",

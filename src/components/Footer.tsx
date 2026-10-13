@@ -32,7 +32,7 @@ export default function Footer({
   onSelectTopic,
   settings = {
     phone: "+1 (817) 494-3335",
-    email: "",
+    email: "info@cbdhurst.com",
     hours:
       "Mon - Fri: 10:30 AM - 7:30 PM | Sat: 10:30 AM - 6:30 PM | Sun: 11:00 AM - 6:00 PM",
     location: "730 W Pipeline Rd, Hurst, TX 76053",
@@ -56,14 +56,14 @@ export default function Footer({
   };
 
   return (
-    <footer className="bg-[#3b142e] text-[#eadfe6] font-sans border-t border-[#5d2a49]">
+    <footer className="bg-[#3b142e] text-white font-sans border-t border-[#5d2a49]">
       {/* Top newsletter banner */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 border-b border-[#5d2a49] grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
         <div className="md:col-span-6 space-y-2">
           <h3 className="text-white font-bold text-lg font-serif">
             Join the Hurst Wellness Club
           </h3>
-          <p className="text-xs text-[#d7c6d0]">
+          <p className="text-xs text-white/80">
             Get early alerts on new lab certificates, limited artisanal gummy
             batches, and local discounts.
           </p>
@@ -110,7 +110,7 @@ export default function Footer({
             />
           </div>
 
-          <p className="text-xs text-[#d7c6d0] leading-relaxed">
+          <p className="text-xs text-white/80 leading-relaxed">
             Our Hurst, Texas boutique delivers transparently certified
             organic wellness. We help modern families explore legal plant-based
             cannabinoids safely.
@@ -143,7 +143,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] block cursor-pointer"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 block cursor-pointer"
               >
                 CBD Gummies
               </a>
@@ -159,7 +159,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] block cursor-pointer"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 block cursor-pointer"
               >
                 CBD Tinctures
               </a>
@@ -175,7 +175,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] block cursor-pointer"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 block cursor-pointer"
               >
                 CBD Capsules
               </a>
@@ -191,7 +191,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] block cursor-pointer"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 block cursor-pointer"
               >
                 CBD Topicals
               </a>
@@ -215,7 +215,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] cursor-pointer block"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 cursor-pointer block"
               >
                 About Our Store
               </a>
@@ -230,7 +230,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] cursor-pointer block"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 cursor-pointer block"
               >
                 Contact / Visit Us
               </a>
@@ -245,7 +245,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] block cursor-pointer"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 block cursor-pointer"
               >
                 Educational Blogs
               </a>
@@ -260,7 +260,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] block cursor-pointer"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 block cursor-pointer"
               >
                 Frequently Asked Questions
               </a>
@@ -275,7 +275,7 @@ export default function Footer({
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
-                className="hover:text-[#f0bc37] transition-colors text-left text-[#eadfe6] block cursor-pointer"
+                className="hover:text-[#f0bc37] transition-colors text-left text-white/85 block cursor-pointer"
               >
                 Shop All Products
               </a>
@@ -285,26 +285,36 @@ export default function Footer({
 
         {/* Contact info block */}
         <div className="space-y-3">
-          <h4 className="text-white text-xs font-extrabold uppercase tracking-widest">
+          <h4 className="text-white text-xs font-extrabold uppercase tracking-widest border-b border-[#5d2a49] pb-1.5">
             Direct Storefront
           </h4>
-          <ul className="space-y-3 text-xs leading-relaxed text-[#eadfe6]">
+          <ul className="space-y-3 text-xs leading-relaxed text-white">
             <li className="flex items-start gap-2.5">
               <MapPin className="w-4 h-4 text-[#f0bc37] shrink-0 mt-0.5" />
-              <span>{settings.location}</span>
+              <span className="text-white font-medium">{settings.location}</span>
             </li>
             <li className="flex items-start gap-2.5">
               <Phone className="w-4 h-4 text-[#f0bc37] shrink-0 mt-0.5" />
-              <span>{settings.phone}</span>
+              <a
+                href={`tel:${settings.phone.replace(/[^0-9+]/g, "")}`}
+                className="text-white hover:text-[#f0bc37] font-semibold transition-colors underline-offset-2 hover:underline"
+              >
+                {settings.phone}
+              </a>
             </li>
             <li className="flex items-start gap-2.5">
               <Clock className="w-4 h-4 text-[#f0bc37] shrink-0 mt-0.5" />
-              <span>{settings.hours}</span>
+              <span className="text-white font-medium">{settings.hours}</span>
             </li>
             {settings.email && (
               <li className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 text-[#f0bc37] shrink-0 mt-0.5" />
-                <span>{settings.email}</span>
+                <a
+                  href={`mailto:${settings.email}`}
+                  className="text-white hover:text-[#f0bc37] font-semibold transition-colors underline-offset-2 hover:underline"
+                >
+                  {settings.email}
+                </a>
               </li>
             )}
           </ul>
@@ -312,7 +322,7 @@ export default function Footer({
       </div>
 
       {/* FDA disclaimers and copyrights */}
-      <div className="bg-[#2c1023] py-8 text-[11px] text-[#d7c6d0] font-mono border-t border-[#5d2a49]">
+      <div className="bg-[#2c1023] py-8 text-[11px] text-white/75 font-mono border-t border-[#5d2a49]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 space-y-4 text-center sm:text-justify leading-relaxed">
           <p className="pt-2">
             <strong>FDA Disclaimer:</strong> These statements and molecular

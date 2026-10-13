@@ -337,7 +337,7 @@ export default function ProductDetail({
     
     // Check for global reviews from Admin Panel or database
     let globalMatched: any[] = [];
-    const globalSaved = localStorage.getItem("twobudz_reviews");
+    const globalSaved = localStorage.getItem("hurstcbd_reviews") || localStorage.getItem("twobudz_reviews");
     if (globalSaved) {
       try {
         const parsed = JSON.parse(globalSaved);
@@ -419,14 +419,16 @@ export default function ProductDetail({
 
     const updated = [newReview, ...reviewsList];
     setReviewsList(updated);
+    safeSetItem(`hurstcbd_reviews_${product.id}`, JSON.stringify(updated));
     safeSetItem(`twobudz_reviews_${product.id}`, JSON.stringify(updated));
 
-    // Save to global twobudz_reviews
+    // Save to global reviews store
     try {
-      const globalSaved = localStorage.getItem("twobudz_reviews");
+      const globalSaved = localStorage.getItem("hurstcbd_reviews") || localStorage.getItem("twobudz_reviews");
       let globalList: any[] = [];
       if (globalSaved) globalList = JSON.parse(globalSaved);
       globalList.unshift(newReview);
+      safeSetItem("hurstcbd_reviews", JSON.stringify(globalList));
       safeSetItem("twobudz_reviews", JSON.stringify(globalList));
     } catch (e) {}
 

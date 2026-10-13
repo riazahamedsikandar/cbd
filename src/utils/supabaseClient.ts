@@ -1,12 +1,12 @@
 /**
- * TwoBudz Hostinger MySQL Database Client
+ * CBD American Shaman of Hurst Hostinger MySQL Database Client
  * Replaces Supabase SDK with direct HTTP integration to the Hostinger PHP MySQL bridge.
  * Database: u554546348_cbdsouthlake | User: u554546348_cbdsouthlake
  */
 
 import { normalizeToCleanAsset } from "./imageMatching";
 
-export const CURRENT_CACHE_VERSION = "2026.09.08-clean-blogs-v9";
+export const CURRENT_CACHE_VERSION = "2026.10.12-cbdhurst-v11";
 
 export const checkAndAutoPurgeStaleCache = () => {
   if (typeof window === "undefined") return;
@@ -17,6 +17,7 @@ export const checkAndAutoPurgeStaleCache = () => {
       localStorage.removeItem("twobudz_custom_products");
       localStorage.removeItem("twobudz_blogs");
       localStorage.removeItem("twobudz_api_url");
+      localStorage.removeItem("hurstcbd_api_url");
       localStorage.setItem("twobudz_cache_version", CURRENT_CACHE_VERSION);
     }
   } catch (e) {}
@@ -35,8 +36,14 @@ export const getApiUrl = (): string => {
   if (typeof window === "undefined") {
     return process.env.NEXT_PUBLIC_API_URL || "https://cbdhurst.com/api/index.php";
   }
-  const custom = localStorage.getItem("twobudz_api_url");
-  if (custom && !custom.includes("cornflowerblue")) return custom;
+  const custom = localStorage.getItem("twobudz_api_url") || localStorage.getItem("hurstcbd_api_url");
+  if (custom && !custom.includes("cornflowerblue") && !custom.includes("shophurstcbd.com")) {
+    return custom;
+  }
+  if (custom && custom.includes("shophurstcbd.com")) {
+    localStorage.removeItem("twobudz_api_url");
+    localStorage.removeItem("hurstcbd_api_url");
+  }
   if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
     return process.env.NEXT_PUBLIC_API_URL || "/api/index.php";
   }
@@ -61,7 +68,9 @@ export const isDatabaseConfigured = isSupabaseConfigured;
 export const pingSupabaseKeepAlive = async () => {
   try {
     const apiUrl = getApiUrl();
-    const res = await fetch(`${apiUrl}?action=health`);
+    const res = await fetch(`${apiUrl}?action=health&_t=${Date.now()}`, {
+      cache: "no-store",
+    });
     if (res.ok) {
       const json = await res.json();
       safeSetItem("twobudz_db_last_ping", String(Date.now()));
@@ -122,7 +131,9 @@ class TableQueryBuilder {
   async then(resolve: (result: { data: any; error: any }) => void) {
     try {
       const apiUrl = getApiUrl();
-      const res = await fetch(`${apiUrl}?table=${encodeURIComponent(this.tableName)}`);
+      const res = await fetch(`${apiUrl}?table=${encodeURIComponent(this.tableName)}&_t=${Date.now()}`, {
+        cache: "no-store",
+      });
       if (!res.ok) {
         throw new Error(`API responded with status ${res.status}`);
       }
@@ -185,9 +196,10 @@ class TableQueryBuilder {
       const items = Array.isArray(itemOrItems) ? itemOrItems : [itemOrItems];
       for (const item of items) {
         try {
-          const res = await fetch(apiUrl, {
+          const res = await fetch(`${apiUrl}?_t=${Date.now()}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            cache: "no-store",
             body: JSON.stringify({ action: "upsert", table: this.tableName, data: item }),
           });
           if (!res.ok) {
@@ -213,9 +225,10 @@ class TableQueryBuilder {
       eq: async (_col: string, val: any) => {
         try {
           const apiUrl = getApiUrl();
-          const res = await fetch(apiUrl, {
+          const res = await fetch(`${apiUrl}?_t=${Date.now()}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            cache: "no-store",
             body: JSON.stringify({ action: "delete", table: this.tableName, data: { id: val } }),
           });
           const json = await res.json();
@@ -231,9 +244,10 @@ class TableQueryBuilder {
         try {
           const apiUrl = getApiUrl();
           for (const val of vals) {
-            await fetch(apiUrl, {
+            await fetch(`${apiUrl}?_t=${Date.now()}`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
+              cache: "no-store",
               body: JSON.stringify({ action: "delete", table: this.tableName, data: { id: val } }),
             });
           }
@@ -335,9 +349,10 @@ export const syncToSupabase = async (
       ? { action: "delete", table, data: { id: data.id } }
       : { action: "upsert", table, data };
 
-    const res = await fetch(apiUrl, {
+    const res = await fetch(`${apiUrl}?_t=${Date.now()}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      cache: "no-store",
       body: JSON.stringify(payload),
     });
 
@@ -404,9 +419,10 @@ export const pushAllLocalDataToSupabase = async (
   };
 
   try {
-    const res = await fetch(apiUrl, {
+    const res = await fetch(`${apiUrl}?_t=${Date.now()}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      cache: "no-store",
       body: JSON.stringify(payload),
     });
 
@@ -443,7 +459,7 @@ export const clearAndSyncProductsToDatabase = clearAndSyncProductsToSupabase;
 
 // Export SQL schema string for manual inspection or phpMyAdmin import
 export const getSupabaseSchemaSQL = (): string => {
-  return `-- Hostinger MySQL Schema for TwoBudz
+  return `-- Hostinger MySQL Schema for CBD American Shaman of Hurst
 -- Database: u554546348_cbdsouthlake | User: u554546348_cbdsouthlake
 -- Automatically initialized on Hostinger deployment via /api/index.php
 `;

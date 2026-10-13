@@ -304,10 +304,10 @@ export function matchesCategoryFilter(
 }
 
 export function getCleanCategoryImage(catId: string, customImage?: string): string {
-  if (customImage && !customImage.startsWith("data:")) {
-    const normalized = normalizeToCleanAsset(customImage);
+  if (customImage?.trim()) {
+    const normalized = normalizeToCleanAsset(customImage.trim());
     if (normalized) return normalized;
-    return customImage;
+    return customImage.trim();
   }
   const cleanMapping: Record<string, string> = {
     drinks: "/images/category-drinks.jpg",

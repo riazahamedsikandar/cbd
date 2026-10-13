@@ -108,13 +108,16 @@ export default function App() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const businessName = "CBD American Shaman of Hurst";
+  const businessEmail = "info@cbdhurst.com";
   const storePhone = "+1 (817) 494-3335";
   const storeLocation = "730 W Pipeline Rd, Hurst, TX 76053";
   const normalizeBusinessSettings = (settings: BusinessSettings): BusinessSettings => ({
     ...settings,
     phone: storePhone,
     location: storeLocation,
-    email: (settings.email || "").toLowerCase().includes("twobudz") ? "" : settings.email,
+    email: (settings.email || "").toLowerCase().includes("twobudz")
+      ? businessEmail
+      : settings.email || businessEmail,
     heroBadge: (settings.heroBadge || "").replace(/Flower Mound/gi, "Hurst"),
     heroParagraph: (settings.heroParagraph || "")
       .replace(/Two\s*Budz/gi, businessName)
@@ -129,7 +132,7 @@ export default function App() {
   });
   const defaultSettings: BusinessSettings = {
     phone: storePhone,
-    email: "",
+    email: businessEmail,
     hours:
       "Monday - Friday: 10:30am - 7:30 pm | Saturday: 10:30am - 6:00 pm | Sunday: 11:00 am - 6:00 pm",
     location: storeLocation,
@@ -171,24 +174,27 @@ export default function App() {
       return null;
     };
 
-    const savedProducts = readStored(["twobudz_products", "twobudz_custom_products"]);
+    const savedProducts = readStored(["hurstcbd_products", "hurstcbd_custom_products", "twobudz_products", "twobudz_custom_products"]);
     if (Array.isArray(savedProducts) && savedProducts.length > 0) setProducts(savedProducts);
 
-    const savedBlogs = readStored(["twobudz_blogs"]);
+    const savedBlogs = readStored(["hurstcbd_blogs", "twobudz_blogs"]);
     if (Array.isArray(savedBlogs) && savedBlogs.length > 0) {
       setBlogPosts(savedBlogs.map((post: BlogPost) => ({ ...post, image: resolveBlogImage(post) })));
     }
 
-    const savedFaqs = readStored(["twobudz_faqs"]);
+    const savedFaqs = readStored(["hurstcbd_faqs", "twobudz_faqs"]);
     if (Array.isArray(savedFaqs) && savedFaqs.length > 0) setFaqItems(savedFaqs);
 
-    const savedOrders = readStored(["twobudz_orders"]);
+    const savedOrders = readStored(["hurstcbd_orders", "twobudz_orders"]);
     if (Array.isArray(savedOrders)) setOrders(savedOrders);
 
-    const savedInquiries = readStored(["twobudz_inquiries"]);
+    const savedInquiries = readStored(["hurstcbd_inquiries", "twobudz_inquiries"]);
     if (Array.isArray(savedInquiries)) setInquiries(savedInquiries);
 
     const savedSettings = readStored([
+      "hurstcbd_settings",
+      "hurstcbd_business_settings",
+      "hurstcbd_business_info",
       "twobudz_settings",
       "twobudz_business_settings",
       "twobudz_business_info",
@@ -197,10 +203,10 @@ export default function App() {
       setBusinessSettings(normalizeBusinessSettings({ ...defaultSettings, ...savedSettings }));
     }
 
-    const savedCategories = readStored(["twobudz_categories", "twobudz_custom_categories"]);
+    const savedCategories = readStored(["hurstcbd_categories", "hurstcbd_custom_categories", "twobudz_categories", "twobudz_custom_categories"]);
     if (Array.isArray(savedCategories) && savedCategories.length > 0) setCategories(savedCategories);
 
-    const savedReviews = readStored(["twobudz_reviews"]);
+    const savedReviews = readStored(["hurstcbd_reviews", "twobudz_reviews"]);
     if (Array.isArray(savedReviews) && savedReviews.length > 0) setReviews(savedReviews);
   }, []);
 

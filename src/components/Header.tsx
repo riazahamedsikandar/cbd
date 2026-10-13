@@ -30,7 +30,7 @@ export default function Header({
   openContactModal,
   settings = {
     phone: "+1 (817) 494-3335",
-    email: "",
+    email: "info@cbdhurst.com",
     hours: "Mon - Fri: 10:30 AM - 7:30 PM | Sat: 10:30 AM - 6:30 PM | Sun: 11:00 AM - 6:00 PM",
     location: "730 W Pipeline Rd, Hurst, TX 76053"
   },

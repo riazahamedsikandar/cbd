@@ -882,7 +882,7 @@ export default function AdminPanel({
   };
 
   // Category management handlers
-  const handleSaveCategory = (e: React.FormEvent) => {
+  const handleSaveCategory = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!categoryForm.title || !categoryForm.title.trim()) return;
 
@@ -920,7 +920,14 @@ export default function AdminPanel({
     safeSetItem("twobudz_categories", JSON.stringify(updatedCats));
 
     if (isSupabaseConfigured()) {
-      syncToSupabase("categories", "upsert", newCat);
+      const result = await syncToSupabase("categories", "upsert", newCat);
+      triggerToast(
+        result.success
+          ? "Category image and details synced to MySQL."
+          : `Category saved in this browser only. Database sync failed: ${result.error}`
+      );
+    } else {
+      triggerToast("Category saved in this browser only. Database sync is unavailable in local preview.");
     }
 
     setIsAddingCategory(false);
@@ -2851,7 +2858,7 @@ export default function AdminPanel({
           const firstName = parts[0] || "Customer";
           const lastName = parts.slice(1).join(" ") || "Client";
           const id = idIdx !== -1 && row[idIdx] ? row[idIdx] : "ORD-" + Math.floor(100000 + Math.random() * 900000);
-          const email = emailIdx !== -1 && row[emailIdx] ? row[emailIdx] : "client@twobudz.com";
+          const email = emailIdx !== -1 && row[emailIdx] ? row[emailIdx] : "client@cbdhurst.com";
           const phone = phoneIdx !== -1 && row[phoneIdx] ? row[phoneIdx] : "972-555-0100";
           const totalVal = totalIdx !== -1 ? parseFloat(row[totalIdx].replace(/[^0-9.]/g, "")) || 49.99 : 49.99;
           const status = statusIdx !== -1 && row[statusIdx] ? row[statusIdx] : "Completed";
@@ -2973,7 +2980,7 @@ export default function AdminPanel({
           parsedInquiries = list.map((item: any, i: number) => ({
             id: item.id || "INQ-" + Math.floor(100000 + Math.random() * 900000),
             name: item.name || "Inquirer " + (i + 1),
-            email: item.email || "inquiry@twobudz.com",
+            email: item.email || "inquiry@cbdhurst.com",
             msg: item.msg || item.message || "Bulk imported inquiry message...",
             date: item.date || new Date().toISOString().split("T")[0],
             status: item.status || "unread",
@@ -3004,7 +3011,7 @@ export default function AdminPanel({
           if (!name.trim()) continue;
 
           const id = idIdx !== -1 && row[idIdx] ? row[idIdx] : "INQ-" + Math.floor(100000 + Math.random() * 900000);
-          const email = emailIdx !== -1 && row[emailIdx] ? row[emailIdx] : "user@twobudz.com";
+          const email = emailIdx !== -1 && row[emailIdx] ? row[emailIdx] : "user@cbdhurst.com";
           const msg = msgIdx !== -1 && row[msgIdx] ? row[msgIdx] : "General inquiry submitted.";
           const date = dateIdx !== -1 && row[dateIdx] ? row[dateIdx] : new Date().toISOString().split("T")[0];
           const status = statusIdx !== -1 && row[statusIdx] ? row[statusIdx] : "unread";
@@ -3150,11 +3157,18 @@ export default function AdminPanel({
       }
     };
     reader.readAsText(file);
+    e.target.value = ""; // Reset input so same file can be re-selected
   };
+
+  const [lastImportedReviewCount, setLastImportedReviewCount] = useState<number | null>(null);
 
   const handleImportReviews = (overrideText?: string) => {
     const textToParse = overrideText !== undefined ? overrideText : reviewsCsvText;
-    if (!textToParse.trim()) {
+    if (!textToParse || !textToParse.trim()) {
+      if (lastImportedReviewCount !== null) {
+        setReviewsCsvFeedback(`✅ All ${lastImportedReviewCount} reviews are already successfully imported! Paste new review data or pick another file to add more.`);
+        return;
+      }
       setReviewsCsvFeedback("Error: Please select a file or paste CSV/JSON review data first.");
       return;
     }
@@ -3181,14 +3195,19 @@ export default function AdminPanel({
       const merged = [...parsedReviews, ...existingFiltered];
       if (setReviews) setReviews(merged);
       safeSetItem("twobudz_reviews", JSON.stringify(merged));
+      safeSetItem("hurstcbd_reviews", JSON.stringify(merged));
 
       if (isSupabaseConfigured()) {
         pushAllLocalDataToSupabase(products, categories, blogPosts, faqItems, orders, inquiries, businessSettings, merged);
       }
 
+      setLastImportedReviewCount(parsedReviews.length);
       setReviewsCsvFeedback(`✅ Success! Imported ${parsedReviews.length} new reviews into store catalog & cloud database.`);
-      setReviewsCsvText("");
-      setTimeout(() => setReviewsCsvFeedback(""), 7000);
+      triggerToast(`Imported ${parsedReviews.length} product reviews successfully!`);
+      // Keep reviewsCsvText so clicking "Process Reviews Import" doesn't fail with an empty error
+      if (overrideText) {
+        setReviewsCsvText(overrideText);
+      }
     } catch (err: any) {
       setReviewsCsvFeedback(`Error importing reviews: ${err.message}`);
     }
@@ -4529,7 +4548,7 @@ export default function AdminPanel({
                         </div>
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-1.5">
                           <span className="px-3 py-2.5 bg-[#f7f9f4] border border-[#e1e8db] rounded-xl text-[#72856a] font-mono select-none text-[11px] shrink-0">
-                            twobudz.com/products/
+                            cbdhurst.com/products/
                           </span>
                           <input
                             type="text"
@@ -5210,7 +5229,7 @@ export default function AdminPanel({
                                       Product URL Slug (SEO Permalink)
                                     </label>
                                     <span className="text-[10px] text-gray-500 font-mono">
-                                      twobudz.com/products/{productForm.slug || "your-slug-here"}
+                                      cbdhurst.com/products/{productForm.slug || "your-slug-here"}
                                     </span>
                                   </div>
                                   <input
@@ -5581,7 +5600,7 @@ export default function AdminPanel({
                                 {p.slug && (
                                   <div className="pt-0.5">
                                     <span className="text-[9px] sm:text-[10px] text-[#3b142e] font-mono font-bold bg-[#f7f9f4] border border-[#e1e8db] px-2 py-0.5 rounded truncate inline-block max-w-full">
-                                      SEO URL: twobudz.com/products/{p.slug}
+                                      SEO URL: cbdhurst.com/products/{p.slug}
                                     </span>
                                   </div>
                                 )}
@@ -5878,11 +5897,11 @@ export default function AdminPanel({
                           className="bg-white border border-[#e1e8db] rounded-2xl flex flex-col justify-between overflow-hidden hover:border-[#3b142e] transition-all shadow-sm group"
                         >
                           {/* Full Category Image Banner Preview */}
-                          <div className="relative w-full h-44 bg-[#edf2e8] overflow-hidden border-b border-[#e1e8db]">
+                          <div className="relative w-full h-44 bg-[#3b142e] overflow-hidden border-b border-[#e1e8db]">
                             <img
                               src={getCleanCategoryImage(cat.id, cat.image)}
                               alt={cat.title}
-                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                               onError={(e) => handleImageError(e, cat.title || "gummies")}
                             />
                             <div className="absolute top-3 right-3 flex items-center gap-1.5">
@@ -7746,23 +7765,31 @@ export default function AdminPanel({
                       />
 
                       {reviewsCsvFeedback && (
-                        <p
-                          className={`text-xs font-mono font-bold ${reviewsCsvFeedback.startsWith("Error") ? "text-red-700" : "text-[#3b142e]"}`}
+                        <div
+                          className={`p-3 rounded-xl text-xs font-mono font-bold flex items-center gap-2 ${
+                            reviewsCsvFeedback.startsWith("Error") || reviewsCsvFeedback.startsWith("No valid")
+                              ? "bg-red-50 text-red-700 border border-red-200"
+                              : "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                          }`}
                         >
-                          {reviewsCsvFeedback}
-                        </p>
+                          <span>{reviewsCsvFeedback}</span>
+                        </div>
                       )}
 
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleImportReviews()}
-                          className="px-4 py-2 bg-[#3b142e] hover:bg-[#5d2a49] text-white rounded-lg text-xs font-bold font-sans cursor-pointer"
+                          className="px-4 py-2 bg-[#3b142e] hover:bg-[#5d2a49] text-white rounded-lg text-xs font-bold font-sans cursor-pointer transition-colors shadow-xs"
                         >
                           Process Reviews Import
                         </button>
                         <button
-                          onClick={() => setReviewsCsvText("")}
-                          className="px-4 py-2 bg-white border border-[#e1e8db] rounded-lg text-xs font-bold text-gray-500 cursor-pointer"
+                          onClick={() => {
+                            setReviewsCsvText("");
+                            setReviewsCsvFeedback("");
+                            setLastImportedReviewCount(null);
+                          }}
+                          className="px-4 py-2 bg-white border border-[#e1e8db] hover:border-[#3b142e] rounded-lg text-xs font-bold text-gray-500 hover:text-[#2c3527] cursor-pointer transition-colors"
                         >
                           Clear Text
                         </button>
@@ -8172,7 +8199,7 @@ export default function AdminPanel({
                           })
                         }
                         className="w-full p-2.5 bg-white border border-[#e1e8db] rounded-xl"
-                        placeholder="Store email (optional)"
+                        placeholder="info@cbdhurst.com"
                       />
                     </div>
 

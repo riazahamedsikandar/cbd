@@ -9,9 +9,9 @@ interface FAQProps {
 }
 
 export default function FAQ({ faqsList = FAQ_ITEMS }: FAQProps) {
-  const [openId, setOpenId] = useState<number | null>(1);
+  const [openId, setOpenId] = useState<string | number | null>(1);
 
-  const toggleFAQ = (id: number) => {
+  const toggleFAQ = (id: string | number) => {
     setOpenId(openId === id ? null : id);
   };
 
